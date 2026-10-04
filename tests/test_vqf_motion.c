@@ -31,11 +31,12 @@ int main(void)
     before = s;
     fixed_vqf_update_acc(&s, zero_acc);
     assert(memcmp(&s, &before, sizeof(s)) == 0);
-    /* Rest detection enters after one second and clears on real motion. */
-    for (unsigned i = 0; i < FIXED_VQF_SAMPLE_HZ; ++i) {
+    /* Original VQF rest duration: 1.5 seconds, then clear on real motion. */
+    const unsigned min_rest = 3U * FIXED_VQF_SAMPLE_HZ / 2U;
+    for (unsigned i = 0; i < min_rest; ++i) {
         fixed_vqf_update_gyr(&s, zero_gyr);
         fixed_vqf_update_acc(&s, gravity);
-        if (i+1 < FIXED_VQF_SAMPLE_HZ) assert(!fixed_vqf_get_rest_detected(&s));
+        if (i+1 < min_rest) assert(!fixed_vqf_get_rest_detected(&s));
     }
     assert(fixed_vqf_get_rest_detected(&s));
     fixed_vqf_get_q30(&s, q);

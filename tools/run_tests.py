@@ -16,21 +16,21 @@ def main():
     parser.add_argument("--cc", default="gcc", help="GCC-compatible compiler executable")
     parser.add_argument("--sanitize", action="store_true", help="Enable undefined-behavior sanitizer")
     args = parser.parse_args()
-    spec = importlib.util.spec_from_file_location("coefficients", ROOT / "tools/vqf_coefficients.py")
+    spec = importlib.util.spec_from_file_location("coefficients", ROOT / "tools/generate_coefficients.py")
     coefficients = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(coefficients)
-    assert (ROOT / "src/fixed_vqf_tuning.h").read_text() == coefficients.generate(), "Coefficient header is stale"
+    assert (ROOT / "vqf/c/fixed_vqf_coefficients.h").read_text(encoding="utf-8") == coefficients.generate(), "Coefficient header is stale"
     out = ROOT / "build-host"
     out.mkdir(exist_ok=True)
     for hz in (1000, 2000):
         for fs in (0, 1):
             common = [args.cc, "-std=c99", "-O2", "-Wall", "-Wextra", "-Werror", "-UNDEBUG",
-                      "-Iinclude", f"-DFIXED_VQF_SAMPLE_HZ={hz}U", f"-DLSM6DSV_GYRO_FS_2000DPS={fs}"]
+                      "-Ivqf/c", f"-DFIXED_VQF_SAMPLE_HZ={hz}U", f"-DLSM6DSV_GYRO_FS_2000DPS={fs}"]
             if args.sanitize:
                 common += ["-fsanitize=undefined", "-fno-sanitize-recover=all"]
-            for name in ("vqf_profiles", "imu_numeric", "vqf_motion"):
+            for name in ("vqf_defaults", "imu_numeric", "vqf_motion"):
                 exe = out / f"test_{name}_{hz}_{fs}.exe"
-                run(common + [f"tests/test_{name}.c", "src/fixed_vqf.c", "-lm", "-o", exe])
+                run(common + [f"tests/test_{name}.c", "vqf/c/fixed_vqf.c", "-lm", "-o", exe])
                 run([exe])
     print("All 12 host test configurations passed; coefficient header matches generator.")
 

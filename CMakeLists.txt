@@ -7,27 +7,19 @@ if(NOT FIXED_VQF_SAMPLE_HZ MATCHES "^(1000|2000)$")
     message(FATAL_ERROR "FIXED_VQF_SAMPLE_HZ must be 1000 or 2000")
 endif()
 option(FIXED_VQF_GYRO_2000DPS "LSM6DSV raw gyro conversion at +/-2000 dps" OFF)
-option(FIXED_VQF_USE_CH32_SECTIONS "Use CH32 .fasttext/.slowtext linker sections" OFF)
 option(FIXED_VQF_BUILD_TESTS "Build host numerical tests" ON)
 option(FIXED_VQF_BUILD_EXAMPLE "Build stationary example" ON)
 
-add_library(fixed_vqf STATIC src/fixed_vqf.c)
-add_library(FixedVQF::fixed_vqf ALIAS fixed_vqf)
-target_include_directories(fixed_vqf PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_compile_features(fixed_vqf PUBLIC c_std_99)
-target_compile_definitions(fixed_vqf PUBLIC
-    FIXED_VQF_SAMPLE_HZ=${FIXED_VQF_SAMPLE_HZ}U
-    LSM6DSV_GYRO_FS_2000DPS=$<BOOL:${FIXED_VQF_GYRO_2000DPS}>
-    FIXED_VQF_USE_CH32_SECTIONS=$<BOOL:${FIXED_VQF_USE_CH32_SECTIONS}>)
+add_subdirectory(vqf/c)
 
 if(FIXED_VQF_BUILD_EXAMPLE)
-    add_executable(vqf_stationary examples/stationary.c)
+    add_executable(vqf_stationary vqf/c/examples/stationary.c)
     target_link_libraries(vqf_stationary PRIVATE FixedVQF::fixed_vqf)
 endif()
 
 if(FIXED_VQF_BUILD_TESTS)
     enable_testing()
-    foreach(name IN ITEMS vqf_profiles imu_numeric vqf_motion)
+    foreach(name IN ITEMS vqf_defaults imu_numeric vqf_motion)
         add_executable(test_${name} tests/test_${name}.c)
         target_link_libraries(test_${name} PRIVATE FixedVQF::fixed_vqf)
         if(MSVC)

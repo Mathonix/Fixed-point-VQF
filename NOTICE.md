@@ -1,9 +1,7 @@
-# 来源与许可说明
+# Copyright and license notices
 
-本仓库的定点融合代码提取自 Mathonix 的 CH32V203G6U Fixed-VQF IMU 工程，取用日期 2026-10-04。
+The VQF algorithm was developed by Daniel Laidig and Thomas Seel. The [original VQF implementation](https://github.com/dlaidig/vqf) is available under the MIT license.
 
-原工程包含 Hugo Chiang 的 VQF-C 参考实现，其文件标注 `Copyright (c) 2024 Hugo Chiang` 与 `SPDX-License-Identifier: MIT`，并附带 `User/VQF-C-LICENSE.txt`。本仓库保留该许可全文及版权声明于 `LICENSE`。
+The [C reference implementation](https://github.com/DusKing1/vqf-c) is by Hugo Chiang. Its copyright notice, `Copyright (c) 2024 Hugo Chiang`, and MIT license are preserved in `LICENSE`.
 
-定点实现由原项目在 VQF 算法与 C 参考实现基础上开发。本次提取保留工作区中的定点实现，不附带原工程的浮点参考实现、WCH 外设库、启动代码或板级固件。
-
-原项目 HEAD 只标识提取时的已提交版本；本次实际来源包含本地未提交修改，各原始文件的 SHA-256 列于 `docs/source_manifest.json`，不能将这些源文件全部视为该 HEAD 中的内容。
+Fixed-VQF provides a fixed-point C implementation of the 6D fusion algorithm. Its numerical representation and supported interfaces are described in the documentation.

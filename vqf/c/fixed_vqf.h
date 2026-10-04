@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -8,22 +8,13 @@
 #define FIXED_VQF_SAMPLE_HZ     2000U
 #endif
 
-/* Sensor full-scale options; defaults preserve the original ranges. */
+/* Optional LSM6DSV raw gyro conversion helper. */
 #ifndef LSM6DSV_GYRO_FS_2000DPS
 #define LSM6DSV_GYRO_FS_2000DPS 0U /* 0: +/-125 dps, 1: +/-2000 dps */
 #endif
-#ifndef LSM6DSV_ACCEL_FS_4G
-#define LSM6DSV_ACCEL_FS_4G     0U /* 0: +/-2 g,    1: +/-4 g */
-#endif
-
-/* Selectable fast/balanced/stable tunes at FIXED_VQF_SAMPLE_HZ.
- * tauAcc 1.0/2.5/5.0 s, restFilterTau 0.5 s, restMinT 1.0 s,
- * restThGyr 0.6 deg/s, restThAcc 0.15 m/s^2,
- * biasSigmaInit 0.5, biasSigmaMotion 0.1, biasSigmaRest 0.03/0.02/0.01 deg/s,
- * biasClip 2 deg/s, biasForgettingTime 100 s, verticalForgetting 0.0001. */
+/* Original VQF defaults for the 6D bias estimators. */
 #define FIXED_VQF_MOTION_BIAS_ENABLED 1U
 #define FIXED_VQF_REST_BIAS_ENABLED   1U
-/* Other rest/motion parameters remain shared across the three profiles. */
 
 /*
  * Fixed-point Full-VQF (6D, no magnetometer) numeric formats.
@@ -60,16 +51,16 @@ typedef struct {
 
     uint16_t rest_count;
     uint16_t flags;
-    uint8_t profile; /* 0..2; uses previous tail padding, no struct RAM growth */
 } fixed_vqf_t;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* LSM6DSV selected gyro scale: raw sample -> rad/s Q7.24. */
 q24_t fixed_vqf_gyro_raw_to_q24(int16_t raw);
 
 void fixed_vqf_init(fixed_vqf_t *s);
-void fixed_vqf_set_profile(fixed_vqf_t *s,uint8_t profile);
-uint16_t fixed_vqf_tau_acc_ms(uint8_t profile);
-const q30_t *fixed_vqf_gyro_coeffs(uint8_t profile);
 void fixed_vqf_update_gyr(fixed_vqf_t *s, const q24_t gyr_rads_q24[3]);
 void fixed_vqf_update_acc(fixed_vqf_t *s, const q30_t acc_g_q30[3]);
 void fixed_vqf_get_q30(const fixed_vqf_t *s, q30_t out[4]);
@@ -77,3 +68,6 @@ void fixed_vqf_get_bias_q24(const fixed_vqf_t *s, q24_t out[3]);
 void fixed_vqf_get_bias_q16(const fixed_vqf_t *s, int32_t out[3]);
 bool fixed_vqf_get_rest_detected(const fixed_vqf_t *s);
 
+#ifdef __cplusplus
+}
+#endif
