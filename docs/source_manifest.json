@@ -1,0 +1,44 @@
+{
+  "source_repository": "https://github.com/Mathonix/CH32V203G6U-Fixed-VQF-IMU",
+  "source_head": "9f1751898970a540852f00d7ae4bb65451d9fa39",
+  "snapshot_date": "2026-10-04",
+  "snapshot": "working tree including uncommitted changes",
+  "files": [
+    {
+      "path": "User/fixed_vqf.c",
+      "sha256": "66914584d9125c136b5c39dfcdaa91147c932eee64bcb056d8b1693cdb9423d3"
+    },
+    {
+      "path": "User/fixed_vqf.h",
+      "sha256": "77cefd0b628bc033c3ba24aeecefb367a7a3d7d2e75a62dfe4afee4a4ad4a773"
+    },
+    {
+      "path": "User/fixed_vqf_tuning.h",
+      "sha256": "0b2f5c2bb84ffe6a53d757f94f03c3ab2fbd8c67fe9fbe7ccefd26e930e2d7d9"
+    },
+    {
+      "path": "User/imu_numeric.h",
+      "sha256": "98950cb93e7aa089fad7b7bc471cc8add421093337b1960b4ccd488378359f1e"
+    },
+    {
+      "path": "User/sections.h",
+      "sha256": "b99c1b803f643f9107d1f55937a69c09fd94e97a7f91b9317ad5251ad04b230c"
+    },
+    {
+      "path": "User/VQF-C-LICENSE.txt",
+      "sha256": "ea863181cb8db7d939eb0745f0e511a8fbb41a135468a30f88a416ac13b8fe95"
+    },
+    {
+      "path": "tests/test_vqf_profiles.c",
+      "sha256": "f803582278436019b00ab7dcbda1e9c4c62795011e7ccbf6cb5daba3c73dd57c"
+    },
+    {
+      "path": "tests/test_imu_numeric.c",
+      "sha256": "7e333c99d8d90a14c152e40b12c9c3ccfa6cce418d11434c4413a0a8b3db08da"
+    },
+    {
+      "path": "tools/vqf_coefficients.py",
+      "sha256": "486678883940655646381ce75073832c71584bfd37ad37e4474b4bcddcf30e1e"
+    }
+  ]
+}

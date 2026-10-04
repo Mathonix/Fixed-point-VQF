@@ -1,0 +1,18 @@
+name: Host numerical tests
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Test both sampling rates and gyro full scales
+        run: python tools/run_tests.py --sanitize
+      - name: Build standalone CMake library and example
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --parallel
+          ctest --test-dir build --output-on-failure
+          ./build/vqf_stationary
