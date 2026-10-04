@@ -41,7 +41,7 @@ For CMake integration, disable host executables and link the library:
 ```cmake
 set(FIXED_VQF_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(FIXED_VQF_BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
-add_subdirectory(Fixed-VQF)
+add_subdirectory(Fixed-point-VQF)
 target_link_libraries(your_firmware PRIVATE FixedVQF::fixed_vqf)
 ```
 

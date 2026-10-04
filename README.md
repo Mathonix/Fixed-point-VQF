@@ -1,8 +1,8 @@
-# Fixed-VQF：定点四元数姿态估计
+# Fixed-point VQF
 
 [中文](README.md) | [English](README.en.md)
 
-Fixed-VQF 是 VQF（Versatile Quaternion-based Filter）的 C99 定点实现，用于嵌入式 IMU 姿态估计。融合计算使用整数运算，无动态内存分配，适合不带浮点单元的处理器。
+Fixed-point VQF 是 VQF（Versatile Quaternion-based Filter）的 C99 定点实现，用于嵌入式 IMU 姿态估计。融合计算使用整数运算，无动态内存分配，适合不带浮点单元的处理器。
 
 本实现提供无磁力计的 **6D 传感器融合**，包括陀螺仪积分、加速度计倾角校正、陀螺仪零偏估计和静止检测，输出 `[w, x, y, z]` 四元数。默认算法参数采用原版 VQF 的 6D 设置，转换为定点系数。
 

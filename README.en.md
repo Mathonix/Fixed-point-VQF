@@ -1,8 +1,8 @@
-# Fixed-VQF: Fixed-Point Quaternion-Based Orientation Estimation
+# Fixed-point VQF
 
 [中文](README.md) | [English](README.en.md)
 
-Fixed-VQF is a C99 fixed-point implementation of VQF (Versatile Quaternion-based Filter) for embedded IMU orientation estimation. The fusion core uses integer arithmetic without dynamic memory allocation, making it suitable for processors without a floating-point unit.
+Fixed-point VQF is a C99 fixed-point implementation of VQF (Versatile Quaternion-based Filter) for embedded IMU orientation estimation. The fusion core uses integer arithmetic without dynamic memory allocation, making it suitable for processors without a floating-point unit.
 
 This implementation provides **6D sensor fusion without a magnetometer**, including gyroscope integration, accelerometer inclination correction, gyroscope bias estimation, and rest detection. It outputs a quaternion in `[w, x, y, z]` order. The default algorithm parameters use the original VQF 6D settings, converted to fixed-point coefficients.
 
